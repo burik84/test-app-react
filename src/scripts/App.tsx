@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {getData} from './shared/services';
+import {IData} from './shared/interface';
 import logo from '../images/logo.svg';
 import '../style/App.scss';
 
 function App() {
-  const [data, setData] = useState();
+  const [data, setData] = useState<IData[]|undefined>();
   useEffect(() => {
     document.title = 'Test App React';
     const fetchData = async () => {
-      const result = await getData();
+      const result:IData[] = await getData();
       setData(result);
     };
     fetchData();
