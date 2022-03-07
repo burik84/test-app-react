@@ -1,10 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import {getData} from './shared/services';
 import logo from '../images/logo.svg';
 import '../style/App.scss';
 
 function App() {
+  const [data, setData] = useState();
   useEffect(() => {
     document.title = 'Test App React';
+    const fetchData = async () => {
+      const result = await getData();
+      setData(result);
+    };
+    fetchData();
   }, []);
   return (
     <div className="App">
