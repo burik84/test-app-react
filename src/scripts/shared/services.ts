@@ -1,8 +1,8 @@
-import {IData} from './interface';
+import { IData } from './interface';
 
 const urlData = 'http://jsonplaceholder.typicode.com/photos';
-const getData:()=>Promise<IData[]> = async ()=> {
-  const data:IData[] = await fetch(urlData)
+const getData: () => Promise<IData[]> = async () => {
+  const data: IData[] = await fetch(urlData)
     .then((res) => res.json())
     .then((data) => {
       // console.log(data);
@@ -15,4 +15,15 @@ const getData:()=>Promise<IData[]> = async ()=> {
   return data;
 };
 
-export { getData };
+const getListsID = (data: IData[]):number[] => {
+  if (!data) return []
+  const set = new Set<number>();
+  data.forEach((element) => {
+    set.add(element.albumId);
+  });
+  const result= [...set];
+
+  return result;
+};
+
+export { getData, getListsID };

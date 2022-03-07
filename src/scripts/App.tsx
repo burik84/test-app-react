@@ -1,35 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import {getData} from './shared/services';
-import {IData} from './shared/interface';
-import logo from '../images/logo.svg';
+import { getData, getListsID } from './shared/services';
+import { IData } from './shared/interface';
 import '../style/App.scss';
 
+import Header from './layout/header/Header';
+import Cards from './layout/cards/Cards';
+
 function App() {
-  const [data, setData] = useState<IData[]|undefined>();
+  const [data, setData] = useState<IData[]>([]);
+  const [listsID, setListsID] = useState<number[]>([0]);
+
   useEffect(() => {
     document.title = 'Test App React';
     const fetchData = async () => {
-      const result:IData[] = await getData();
-      setData(result);
+      await getData().then((lists) => {
+        setData(lists);
+        const resultAlbomID=getListsID(lists)
+        setListsID(resultAlbomID);
+      });
     };
     fetchData();
   }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header lists={listsID} />
+      <Cards lists={data} />
     </div>
   );
 }
