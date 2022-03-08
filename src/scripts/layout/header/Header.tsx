@@ -1,17 +1,23 @@
 import React from 'react';
 import './header.scss';
-import { IListsID } from '../../shared/interface';
 
-const Header = ({ lists }: IListsID) => {
+type TProps = {
+  lists: number[];
+  getFilter: (number:number)=>void;
+};
+
+const Header = ({ lists, getFilter }:TProps) => {
   const ShowListsID = () => {
-    const listItems = lists.map((number) => (
+    const listItems = lists.map((number: number) => (
       <li key={number.toString()}>
-        <button className="button">{number}</button>
+        <button className="button" onClick={() => getFilter(number)}>
+          {number}
+        </button>
       </li>
     ));
     listItems.push(
-      <li key="all">
-        <button className="button button-active">Все</button>
+      <li key="0">
+        <button className="button button-active" onClick={() => getFilter(0)}>Все</button>
       </li>
     );
     return <ul className="lists__button">{listItems}</ul>;

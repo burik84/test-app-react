@@ -15,15 +15,22 @@ const getData: () => Promise<IData[]> = async () => {
   return data;
 };
 
-const getListsID = (data: IData[]):number[] => {
-  if (!data) return []
+const getListsID = (data: IData[]): number[] => {
+  if (!data) return [];
   const set = new Set<number>();
   data.forEach((element) => {
     set.add(element.albumId);
   });
-  const result= [...set];
+  const result = [...set];
 
   return result;
 };
 
-export { getData, getListsID };
+const filterData = (data: IData[]|[], albomID = 0) => {
+  const result = albomID
+    ? data.filter((item: IData) => albomID === item.albumId)
+    : data;
+  return result;
+};
+
+export { getData, getListsID, filterData };
