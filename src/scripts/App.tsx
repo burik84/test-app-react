@@ -8,33 +8,39 @@ import Cards from './layout/cards/Cards';
 
 function App() {
   const [data, setData] = useState<IData[]>([]);
-  const [filter, setFilterData] = useState<IData[]>([]);
+  const [dataFilter, setFilterData] = useState<IData[]>([]);
   const [listsID, setListsID] = useState<number[]>([0]);
 
   useEffect(() => {
-    document.title = 'Test App React';
     const fetchData = async () => {
       await getData().then((lists) => {
         setData(lists);
-        setFilterData(lists)
-        const resultAlbomID=getListsID(lists)
+        setFilterData(lists);
+        const resultAlbomID = getListsID(lists);
         setListsID(resultAlbomID);
       });
     };
     fetchData();
   }, []);
 
-  const clickFilterButton=(buttonID:number)=>{
-    console.log(buttonID);
-
-    const result=filterData(data,buttonID)
-    setFilterData(result)
-  }
-
+  const clickFilterButton = (buttonID: number) => {
+    const result = filterData(data, buttonID);
+    setFilterData(result);
+  };
+  const clickDeleteCard = (buttonID: number) => {
+    let result: IData[] = [];
+    dataFilter.forEach((item: IData, index) => {
+      if (item.id === buttonID) {
+        const ind = index;
+        result = [...dataFilter.slice(0, ind), ...dataFilter.slice(ind + 1)];
+        setFilterData(result);
+      }
+    });
+  };
   return (
     <div className="App">
-      <Header lists={listsID} getFilter={clickFilterButton}/>
-      <Cards lists={filter} />
+      <Header lists={listsID} getFilter={clickFilterButton} />
+      <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
     </div>
   );
 }

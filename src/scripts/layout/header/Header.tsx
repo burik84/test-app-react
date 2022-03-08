@@ -16,8 +16,8 @@ const Header = ({ lists, getFilter }:TProps) => {
       </li>
     ));
     listItems.push(
-      <li key="0">
-        <button className="button button-active" onClick={() => getFilter(0)}>Все</button>
+      <li key="-1">
+        <button className="button button-active" onClick={() => getFilter(-1)}>Все</button>
       </li>
     );
     return <ul className="lists__button">{listItems}</ul>;

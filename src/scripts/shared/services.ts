@@ -27,7 +27,7 @@ const getListsID = (data: IData[]): number[] => {
 };
 
 const filterData = (data: IData[]|[], albomID = 0) => {
-  const result = albomID
+  const result = albomID>0
     ? data.filter((item: IData) => albomID === item.albumId)
     : data;
   return result;
