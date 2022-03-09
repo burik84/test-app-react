@@ -1,26 +1,34 @@
 import React from 'react';
 import './header.scss';
+import { Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 
 type TProps = {
   lists: number[];
-  getFilter: (number:number)=>void;
+  getFilter: (number: number) => void;
+  currentAlbomID:number;
 };
 
-const Header = ({ lists, getFilter }:TProps) => {
+const Header = ({ lists, getFilter, currentAlbomID=-1}: TProps) => {
+
   const ShowListsID = () => {
-    const listItems = lists.map((number: number) => (
-      <li key={number.toString()}>
-        <button className="button" onClick={() => getFilter(number)}>
-          {number}
-        </button>
-      </li>
+
+    const listItems = lists.map((number: number) =>(
+      <ButtonGroup size="sm" className="m-1" key={number.toString()}>
+        <Button variant={number===currentAlbomID?'success':'light'}  onClick={() => getFilter(number)}>{number}</Button>
+      </ButtonGroup>
     ));
+
     listItems.push(
-      <li key="-1">
-        <button className="button button-active" onClick={() => getFilter(-1)}>Все</button>
-      </li>
+      <ButtonGroup size="sm" className="m-1" key="-1">
+        <Button variant={currentAlbomID===-1?'success':'light'} onClick={() => getFilter(-1)}>Все</Button>
+      </ButtonGroup>
     );
-    return <ul className="lists__button">{listItems}</ul>;
+
+    return (
+      <ButtonToolbar aria-label="Toolbar with button groups">
+        {listItems}
+      </ButtonToolbar>
+    );
   };
 
   return (
