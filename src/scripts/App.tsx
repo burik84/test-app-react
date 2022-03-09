@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getData, getListsID, filterData } from './shared/services';
 import { IData } from './shared/interface';
+import { Spinner } from 'react-bootstrap';
 
 import '../style/App.scss';
 
@@ -12,28 +13,37 @@ function App() {
   const [dataFilter, setFilterData] = useState<IData[]>([]);
   const [albomID, setAlbomID] = useState<number>(-1);
   const [listsID, setListsID] = useState<number[]>([0]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getData().then((lists) => {
-        setData(lists);
-        setFilterData(lists);
-        const resultAlbomID = getListsID(lists);
-        setListsID(resultAlbomID);
-      });
-    };
-    fetchData();
-  }, []);
+    if (isLoading) {
+      if (albomID === -1) {
+        const fetchData = async () => {
+          await getData()
+            .then((lists) => {
+              setData(lists);
+              setFilterData(lists);
+              const resultAlbomID = getListsID(lists);
+              setListsID(resultAlbomID);
+            })
+            .then(() => {
+              setIsLoading(false);
+            });
+        };
+        fetchData();
+      }
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     const result = filterData(data, albomID);
     setFilterData(result);
+    setIsLoading(false);
   }, [albomID]);
 
   const clickFilterButton = (buttonID: number) => {
-    // const result = filterData(data, buttonID);
-    setAlbomID(buttonID)
-    // setFilterData(result);
+    setAlbomID(buttonID);
+    setIsLoading(true);
   };
   const clickDeleteCard = (buttonID: number) => {
     let result: IData[] = [];
@@ -45,10 +55,28 @@ function App() {
       }
     });
   };
+
+  const showSpinner = () => {
+    console.log(isLoading);
+
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
+  };
   return (
     <div className="App">
-      <Header lists={listsID} getFilter={clickFilterButton} currentAlbomID={albomID} />
-      <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
+      <Header
+        lists={listsID}
+        getFilter={clickFilterButton}
+        currentAlbomID={albomID}
+      />
+      {isLoading ? (
+        showSpinner()
+      ) : (
+        <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
+      )}
     </div>
   );
 }

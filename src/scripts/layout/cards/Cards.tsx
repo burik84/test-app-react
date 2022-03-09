@@ -12,7 +12,7 @@ const Cards = ({ lists, deleteCard }: TProps) => {
   const ShowCardID = () => {
     const listCards = lists.map((card: IData) => (
       <Col key={card.id.toString()}>
-        <Card>
+        <Card className='h-100'>
           <Card.Img variant="top" src={card.thumbnailUrl} />
           <Card.Body>
             <Card.Title>{card.title}</Card.Title>
@@ -26,7 +26,7 @@ const Cards = ({ lists, deleteCard }: TProps) => {
 
     return (
       <Container>
-        <Row xs={2} md={4} lg={8} className="g-2">
+        <Row xs={1} md={2} lg={3} xl={4} className="g-3">
           {listCards}
         </Row>
       </Container>
