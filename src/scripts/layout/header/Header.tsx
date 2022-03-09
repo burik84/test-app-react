@@ -20,7 +20,7 @@ const Header = ({ lists, getFilter, currentAlbomID=-1}: TProps) => {
 
     listItems.push(
       <ButtonGroup size="sm" className="m-1" key="-1">
-        <Button variant={currentAlbomID===-1?'success':'light'} onClick={() => getFilter(-1)}>Все</Button>
+        <Button variant={currentAlbomID===-1?'success':'light'} onClick={() => getFilter(-1)}>All</Button>
       </ButtonGroup>
     );
 
