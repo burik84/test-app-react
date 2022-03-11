@@ -14,6 +14,24 @@ const getData: () => Promise<IData[]> = async () => {
 
   return data;
 };
+const getFilterData: (albumID:number) => Promise<IData[]> = async (albumID:number) => {
+  const data: IData[] = await fetch(`${urlData}?albumId=${albumID}`)
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.log('Something went wrong', error.message);
+    });
+
+  return data;
+};
+const deleteData = async (id: number) => {
+  await fetch(`${urlData}/${id}`, {
+    method: 'DELETE',
+  });
+};
 
 const getListsID = (data: IData[]): number[] => {
   if (!data) return [];
@@ -26,11 +44,10 @@ const getListsID = (data: IData[]): number[] => {
   return result;
 };
 
-const filterData = (data: IData[]|[], albomID = 0) => {
-  const result = albomID>0
-    ? data.filter((item: IData) => albomID === item.albumId)
-    : data;
+const filterData = (data: IData[] | [], albomID = 0) => {
+  const result =
+    albomID > 0 ? data.filter((item: IData) => albomID === item.albumId) : data;
   return result;
 };
 
-export { getData, getListsID, filterData };
+export { getData, deleteData, getFilterData, getListsID, filterData };
