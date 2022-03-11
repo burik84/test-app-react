@@ -12,8 +12,10 @@ const Cards = ({ lists, deleteCard }: TProps) => {
   const ShowCardID = () => {
     const listCards = lists.map((card: IData) => (
       <Col key={card.id.toString()}>
-        <Card className='h-100'>
-          <Card.Img variant="top" src={card.thumbnailUrl} />
+        <Card className="h-100">
+          <div className='card-image'>
+            <Card.Img variant="top" src={card.thumbnailUrl} />
+          </div>
           <Card.Body>
             <Card.Title>{card.title}</Card.Title>
             <Button variant="danger" onClick={() => deleteCard(card.id)}>

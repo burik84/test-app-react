@@ -1,10 +1,19 @@
-.lists__card{
+.lists__card {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.card{
-  display: flex;
+.card {
   flex-direction: row;
+}
+
+.card-image {
+  align-self: center;
+  flex-shrink: 0;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
