@@ -1,7 +1,9 @@
-import React from 'react';
-import { IData, IListsCard } from '../../shared/interface';
+import React, { useState } from 'react';
+import { IData } from '../../shared/interface';
 import './cards.scss';
 import { Row, Col, Card, Button, Container } from 'react-bootstrap';
+import ModalWindow from '../../components/modal/modal';
+import { StringLiteralType } from 'typescript';
 
 type TProps = {
   lists: IData[];
@@ -9,11 +11,21 @@ type TProps = {
 };
 
 const Cards = ({ lists, deleteCard }: TProps) => {
+
+  const [show, setShow] = useState(false);
+  const [dataModal, setDataModal] = useState<string[]>(['']);
+
+  const handleClose = () => setShow(false);
+  const handleShow = (url:string,title:string, id:string) =>{
+    setDataModal([url,title,id])
+    setShow(true)
+  };
+
   const ShowCardID = () => {
     const listCards = lists.map((card: IData) => (
       <Col key={card.id.toString()}>
-        <Card className="h-100">
-          <div className='card-image'>
+        <Card className="h-100" onClick={()=>handleShow(card.url,card.title,`${card.id}`)}>
+          <div className="card-image">
             <Card.Img variant="top" src={card.thumbnailUrl} />
           </div>
           <Card.Body>
@@ -39,6 +51,7 @@ const Cards = ({ lists, deleteCard }: TProps) => {
     <React.Fragment>
       <main>
         <ShowCardID />
+        <ModalWindow show={show} data={dataModal} closeModal={handleClose} deleteCard={deleteCard}></ModalWindow>
       </main>
     </React.Fragment>
   );

@@ -6,6 +6,9 @@
 
 .card {
   flex-direction: row;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .card-image {

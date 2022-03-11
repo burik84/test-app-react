@@ -46,6 +46,8 @@ function App() {
     setIsLoading(true);
   };
   const clickDeleteCard = (buttonID: number) => {
+    console.log(buttonID);
+
     let result: IData[] = [];
     dataFilter.forEach((item: IData, index) => {
       if (item.id === buttonID) {
@@ -57,8 +59,6 @@ function App() {
   };
 
   const showSpinner = () => {
-    console.log(isLoading);
-
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>
