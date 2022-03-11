@@ -11,15 +11,24 @@ import '../style/App.scss';
 
 import Header from './layout/header/Header';
 import Cards from './layout/cards/Cards';
-import {SpinnerC as Spinner} from './components/spinner/spinner';
+import { SpinnerC as Spinner } from './components/spinner/spinner';
+import { PaginationC as Pagination } from './components/pagination/Pagination';
 
 function App() {
   const [data, setData] = useState<IData[]>([]);
   const [dataFilter, setFilterData] = useState<IData[]>([]);
   const [albomID, setAlbomID] = useState<number>(-1);
+  const [pages, setPage] = useState<number[]>([]);
   const [listsID, setListsID] = useState<number[]>([0]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const numberCardAlltoPage = 50;
+  const numberCardtoPage = 10;
+
+  const getAllPages = (length: number) => {
+    if (length > 1000) return Math.floor(length / numberCardAlltoPage);
+    return Math.floor(length / numberCardtoPage);
+  };
   useEffect(() => {
     if (isLoading) {
       if (albomID === -1) {
@@ -30,8 +39,10 @@ function App() {
               setFilterData(lists);
               const resultAlbomID = getListsID(lists);
               setListsID(resultAlbomID);
+              return lists;
             })
-            .then(() => {
+            .then((lists) => {
+              setPage([1, getAllPages(lists.length)]);
               setIsLoading(false);
             });
         };
@@ -49,6 +60,7 @@ function App() {
         // fetchData();
         const result = filterData(data, albomID);
         setFilterData(result);
+        setPage([1, getAllPages(result.length)]);
         setIsLoading(false);
       }
     }
@@ -69,7 +81,9 @@ function App() {
       }
     });
   };
-
+  const changePages = (e: any) => {
+    console.log(e);
+  };
   return (
     <div className="App">
       <Header
@@ -77,11 +91,14 @@ function App() {
         getFilter={clickFilterButton}
         currentAlbomID={albomID}
       />
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
-      )}
+      <main>
+        <Pagination pages={pages} clickPages={changePages} />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
+        )}
+      </main>
     </div>
   );
 }

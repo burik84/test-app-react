@@ -53,10 +53,8 @@ const Cards = ({ lists, deleteCard }: TProps) => {
 
   return (
     <React.Fragment>
-      <main>
         <ShowCardID />
         <ModalWindow show={show} data={dataModal} closeModal={handleClose} deleteCard={deleteCard}></ModalWindow>
-      </main>
     </React.Fragment>
   );
 };
