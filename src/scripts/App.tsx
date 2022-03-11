@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { getData, getListsID, filterData } from './shared/services';
+import {
+  getData,
+  getFilterData,
+  getListsID,
+  filterData,
+} from './shared/services';
 import { IData } from './shared/interface';
-import { Spinner } from 'react-bootstrap';
 
 import '../style/App.scss';
 
 import Header from './layout/header/Header';
 import Cards from './layout/cards/Cards';
+import {SpinnerC as Spinner} from './components/spinner/spinner';
 
 function App() {
   const [data, setData] = useState<IData[]>([]);
@@ -31,23 +36,30 @@ function App() {
             });
         };
         fetchData();
+      } else {
+        // const fetchData = async () => {
+        //   await getFilterData(albomID)
+        //     .then((lists) => {
+        //       setData(lists);
+        //     })
+        //     .then(() => {
+        //       setIsLoading(false);
+        //     });
+        // };
+        // fetchData();
+        const result = filterData(data, albomID);
+        setFilterData(result);
+        setIsLoading(false);
       }
     }
   }, [isLoading]);
-
-  useEffect(() => {
-    const result = filterData(data, albomID);
-    setFilterData(result);
-    setIsLoading(false);
-  }, [albomID]);
 
   const clickFilterButton = (buttonID: number) => {
     setAlbomID(buttonID);
     setIsLoading(true);
   };
-  const clickDeleteCard = (buttonID: number) => {
-    console.log(buttonID);
 
+  const clickDeleteCard = (buttonID: number) => {
     let result: IData[] = [];
     dataFilter.forEach((item: IData, index) => {
       if (item.id === buttonID) {
@@ -58,13 +70,6 @@ function App() {
     });
   };
 
-  const showSpinner = () => {
-    return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    );
-  };
   return (
     <div className="App">
       <Header
@@ -73,7 +78,7 @@ function App() {
         currentAlbomID={albomID}
       />
       {isLoading ? (
-        showSpinner()
+        <Spinner />
       ) : (
         <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
       )}

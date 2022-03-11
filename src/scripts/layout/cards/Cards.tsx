@@ -3,7 +3,6 @@ import { IData } from '../../shared/interface';
 import './cards.scss';
 import { Row, Col, Card, Button, Container } from 'react-bootstrap';
 import ModalWindow from '../../components/modal/modal';
-import { StringLiteralType } from 'typescript';
 
 type TProps = {
   lists: IData[];
@@ -16,21 +15,26 @@ const Cards = ({ lists, deleteCard }: TProps) => {
   const [dataModal, setDataModal] = useState<string[]>(['']);
 
   const handleClose = () => setShow(false);
-  const handleShow = (url:string,title:string, id:string) =>{
-    setDataModal([url,title,id])
-    setShow(true)
-  };
+  const handleClick=(event:any, data:string[])=>{
+    const target=event.target
+    if (target.type==='button'){
+      deleteCard(+data[2])
+    }else{
+      setDataModal(data)
+      setShow(true)
+    }
+  }
 
   const ShowCardID = () => {
     const listCards = lists.map((card: IData) => (
       <Col key={card.id.toString()}>
-        <Card className="h-100" onClick={()=>handleShow(card.url,card.title,`${card.id}`)}>
+        <Card className="h-100" onClick={(e)=>handleClick(e, [card.url,card.title,`${card.id}`])}>
           <div className="card-image">
             <Card.Img variant="top" src={card.thumbnailUrl} />
           </div>
           <Card.Body>
             <Card.Title>{card.title}</Card.Title>
-            <Button variant="danger" onClick={() => deleteCard(card.id)}>
+            <Button variant="danger">
               Delete
             </Button>
           </Card.Body>
