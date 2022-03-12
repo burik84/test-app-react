@@ -78,8 +78,6 @@ function App() {
         setPages(getAllPages(data.length));
         setIsLoading(false);
       } else {
-        console.log();
-
         const result = filterData(data, albomID);
         setFilterData(result);
         setPages(getAllPages(result.length));
@@ -102,8 +100,6 @@ function App() {
     const startNumber = (currentPage - 1) * pages[1];
     const lastNumber = currentPage * pages[1];
     const result: IData[] = dataFilter.slice(startNumber, lastNumber);
-
-    console.log(result, pages[1]);
     return result;
   };
 
