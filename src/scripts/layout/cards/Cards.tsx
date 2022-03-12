@@ -43,19 +43,17 @@ const Cards = ({ lists, deleteCard }: TProps) => {
     ));
 
     return (
-      <Container>
         <Row xs={1} md={2} lg={3} xl={4} className="g-3">
           {listCards}
         </Row>
-      </Container>
     );
   };
 
   return (
-    <React.Fragment>
+    <>
         <ShowCardID />
         <ModalWindow show={show} data={dataModal} closeModal={handleClose} deleteCard={deleteCard}></ModalWindow>
-    </React.Fragment>
+    </>
   );
 };
 

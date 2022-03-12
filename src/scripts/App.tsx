@@ -13,14 +13,17 @@ import Header from './layout/header/Header';
 import Cards from './layout/cards/Cards';
 import { SpinnerC as Spinner } from './components/spinner/spinner';
 import { PaginationC as Pagination } from './components/pagination/Pagination';
+import { Container } from 'react-bootstrap';
 
 function App() {
   const [data, setData] = useState<IData[]>([]);
   const [dataFilter, setFilterData] = useState<IData[]>([]);
   const [albomID, setAlbomID] = useState<number>(-1);
-  const [pages, setPage] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pages, setPages] = useState<number>(0);
   const [listsID, setListsID] = useState<number[]>([0]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoadingCard, setIsLoadingCard] = useState<boolean>(false);
 
   const numberCardAlltoPage = 50;
   const numberCardtoPage = 10;
@@ -42,7 +45,7 @@ function App() {
               return lists;
             })
             .then((lists) => {
-              setPage([1, getAllPages(lists.length)]);
+              setPages(getAllPages(lists.length));
               setIsLoading(false);
             });
         };
@@ -60,7 +63,7 @@ function App() {
         // fetchData();
         const result = filterData(data, albomID);
         setFilterData(result);
-        setPage([1, getAllPages(result.length)]);
+        setPages(getAllPages(result.length));
         setIsLoading(false);
       }
     }
@@ -82,7 +85,42 @@ function App() {
     });
   };
   const changePages = (e: any) => {
-    console.log(e);
+    const target = e.target;
+    const currentTarget = e.currentTarget;
+    if (target === currentTarget) {
+      return;
+    }
+    if (+target.innerHTML) {
+      setCurrentPage(+target.innerHTML);
+      setIsLoadingCard(true);
+      return;
+    }
+
+    const text = target.innerText;
+    if (/›/.test(text)) {
+      if (currentPage < pages) {
+        setCurrentPage(currentPage + 1);
+        setIsLoadingCard(true);
+      }
+    }
+    if (/»/.test(text)) {
+      if (currentPage < pages) {
+        setCurrentPage(pages);
+        setIsLoadingCard(true);
+      }
+    }
+    if (/‹/.test(text)) {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+        setIsLoadingCard(true);
+      }
+    }
+    if (/«/.test(text)) {
+      if (currentPage > 1) {
+        setCurrentPage(1);
+        setIsLoadingCard(true);
+      }
+    }
   };
   return (
     <div className="App">
@@ -92,11 +130,21 @@ function App() {
         currentAlbomID={albomID}
       />
       <main>
-        <Pagination pages={pages} clickPages={changePages} />
         {isLoading ? (
           <Spinner />
         ) : (
-          <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
+          <Container>
+            <Pagination
+              currentPage={currentPage}
+              pages={pages}
+              clickPages={changePages}
+            />
+            {isLoadingCard ? (
+              <Spinner />
+            ) : (
+              <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
+            )}
+          </Container>
         )}
       </main>
     </div>
