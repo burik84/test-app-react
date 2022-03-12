@@ -20,7 +20,7 @@ function App() {
   const [dataFilter, setFilterData] = useState<IData[]>([]);
   const [albomID, setAlbomID] = useState<number>(-1);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pages, setPages] = useState<number>(0);
+  const [pages, setPages] = useState<number[]>([0, 0]);
   const [listsID, setListsID] = useState<number[]>([0]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoadingCard, setIsLoadingCard] = useState<boolean>(false);
@@ -29,9 +29,11 @@ function App() {
   const numberCardtoPage = 10;
 
   const getAllPages = (length: number) => {
-    if (length > 1000) return Math.floor(length / numberCardAlltoPage);
-    return Math.floor(length / numberCardtoPage);
+    const number = length > 1000 ? numberCardAlltoPage : numberCardtoPage;
+    const result: number = Math.floor(length / number);
+    return [result, number];
   };
+
   useEffect(() => {
     if (isLoading) {
       if (albomID === -1) {
@@ -67,20 +69,63 @@ function App() {
         setIsLoading(false);
       }
     }
+  }, []);
+
+  useEffect(() => {
+    if (isLoading) {
+      if (albomID === -1) {
+        setFilterData(data);
+        setPages(getAllPages(data.length));
+        setIsLoading(false);
+      } else {
+        console.log();
+
+        const result = filterData(data, albomID);
+        setFilterData(result);
+        setPages(getAllPages(result.length));
+      }
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (isLoadingCard) {
+      setTimeout(() => {
+        setIsLoadingCard(false);
+      }, 1000);
+    }
+  }, [isLoadingCard]);
+
+  const getCardsToPage = (): IData[] => {
+    const startNumber = (currentPage - 1) * pages[1];
+    const lastNumber = currentPage * pages[1];
+    const result: IData[] = dataFilter.slice(startNumber, lastNumber);
+
+    console.log(result, pages[1]);
+    return result;
+  };
 
   const clickFilterButton = (buttonID: number) => {
     setAlbomID(buttonID);
+    setCurrentPage(1);
     setIsLoading(true);
   };
 
   const clickDeleteCard = (buttonID: number) => {
     let result: IData[] = [];
+    let resultFilter: IData[] = [];
     dataFilter.forEach((item: IData, index) => {
       if (item.id === buttonID) {
         const ind = index;
-        result = [...dataFilter.slice(0, ind), ...dataFilter.slice(ind + 1)];
-        setFilterData(result);
+        resultFilter = [
+          ...dataFilter.slice(0, ind),
+          ...dataFilter.slice(ind + 1),
+        ];
+        result = [...data.slice(0, ind), ...data.slice(ind + 1)];
+        setData(result);
+        setFilterData(resultFilter);
       }
     });
   };
@@ -98,14 +143,14 @@ function App() {
 
     const text = target.innerText;
     if (/›/.test(text)) {
-      if (currentPage < pages) {
+      if (currentPage < pages[0]) {
         setCurrentPage(currentPage + 1);
         setIsLoadingCard(true);
       }
     }
     if (/»/.test(text)) {
-      if (currentPage < pages) {
-        setCurrentPage(pages);
+      if (currentPage < pages[0]) {
+        setCurrentPage(pages[0]);
         setIsLoadingCard(true);
       }
     }
@@ -136,13 +181,13 @@ function App() {
           <Container>
             <Pagination
               currentPage={currentPage}
-              pages={pages}
+              pages={pages[0]}
               clickPages={changePages}
             />
             {isLoadingCard ? (
               <Spinner />
             ) : (
-              <Cards lists={dataFilter} deleteCard={clickDeleteCard} />
+              <Cards lists={getCardsToPage()} deleteCard={clickDeleteCard} />
             )}
           </Container>
         )}

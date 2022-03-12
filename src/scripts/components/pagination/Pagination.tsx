@@ -53,7 +53,7 @@ const PaginationC = ({ currentPage, pages, clickPages }: TProps) => {
     return listPages;
   };
   return (
-      <Pagination onClick={clickPages} className='mb-4'>
+      <Pagination onClick={clickPages} className='mb-4 justify-content-center'>
         {showListsPages()}
       </Pagination>
   );
