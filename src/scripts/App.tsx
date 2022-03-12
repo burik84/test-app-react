@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   getData,
-  getFilterData,
   getListsID,
   filterData,
 } from './shared/services';

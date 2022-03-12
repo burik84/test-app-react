@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IData } from '../../shared/interface';
 import './cards.scss';
-import { Row, Col, Card, Button, Container } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap';
 import ModalWindow from '../../components/modal/modal';
 
 type TProps = {
