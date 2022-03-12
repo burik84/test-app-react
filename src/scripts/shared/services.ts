@@ -1,8 +1,12 @@
 import { IData } from './interface';
 
 const urlData = 'http://jsonplaceholder.typicode.com/photos';
-const getData: () => Promise<IData[]> = async () => {
-  const data: IData[] = await fetch(urlData)
+const urlDaraReserve = '../photos.json';
+
+const getData:() => Promise<IData[]> = () => {
+  const fetchPromise1 = fetch(urlData);
+  const fetchPromise2 = fetch(urlDaraReserve);
+  const data = Promise.any([fetchPromise1, fetchPromise2])
     .then((res) => res.json())
     .then((data) => {
       // console.log(data);
@@ -11,10 +15,11 @@ const getData: () => Promise<IData[]> = async () => {
     .catch((error) => {
       console.log('Something went wrong', error.message);
     });
-
   return data;
 };
-const getFilterData: (albumID:number) => Promise<IData[]> = async (albumID:number) => {
+const getFilterData: (albumID: number) => Promise<IData[]> = async (
+  albumID: number
+) => {
   const data: IData[] = await fetch(`${urlData}?albumId=${albumID}`)
     .then((res) => res.json())
     .then((data) => {

@@ -49,6 +49,11 @@ function App() {
             .then((lists) => {
               setPages(getAllPages(lists.length));
               setIsLoading(false);
+            })
+            .catch(() => {
+              setData([]);
+              setFilterData([]);
+              setListsID([]);
             });
         };
         fetchData();
