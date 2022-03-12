@@ -1,7 +1,7 @@
 import { IData } from './interface';
 
 const urlData = 'http://jsonplaceholder.typicode.com/photos';
-const urlDaraReserve = '../photos.json';
+const urlDaraReserve = '../../photos.json';
 
 const getData:() => Promise<IData[]> = () => {
   const fetchPromise1 = fetch(urlData);
