@@ -1,9 +1,6 @@
 # test-app-react
-Create app on React may be with Matherial UI
 
-## Deploy site
-
-You can check the work [deploy](https://burik84-test-app.netlify.app/)
+Create app on React may be with Matherial UI/bootstrap
 
 ## Getting Started
 
