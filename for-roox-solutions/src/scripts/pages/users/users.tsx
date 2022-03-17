@@ -6,18 +6,14 @@ type TProps = {
   isLoading: boolean;
 };
 
-const Users = ({ isLoading }: TProps) => {
+const Users = () => {
   return (
     <div className="users">
       <h3>Список пользователей</h3>
 
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <ul className="lists">
-          <li>1 user</li>
-        </ul>
-      )}
+      <ul className="lists">
+        <li>1 user</li>
+      </ul>
     </div>
   );
 };

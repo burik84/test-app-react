@@ -24,12 +24,11 @@ const Main = ({ isLoading }: TProps) => {
         </ul>
       </nav>
       <section className="content">
-        {/* <Routes>
-          <Route path="/profile/:username">
-            {isLoading ? <Loader /> : <Profile isLoading />}
-          </Route>
-          <Route path="/">{isLoading ? <Loader /> : <Users isLoading />}</Route>
-        </Routes> */}
+        <Routes>
+          <Route path="/profile/:username" element={isLoading ? <Loader /> :<Profile/>} />
+          <Route path="/" element={isLoading ? <Loader /> :<Users/>} />
+          {/* <Route path="">{isLoading ? <Loader /> : <Users isLoading />}</Route> */}
+        </Routes>
       </section>
     </main>
   );

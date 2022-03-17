@@ -8,7 +8,7 @@ type TProps = {
   isLoading: boolean;
 };
 
-const Profile = ({ isLoading }: TProps) => {
+const Profile = () => {
   let { username } = useParams();
   let { pathname } = useLocation();
   let { state } = useLocation();
@@ -16,15 +16,8 @@ const Profile = ({ isLoading }: TProps) => {
   return (
     <div>
       <h1>{username} Profile</h1>
-
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <p> Registered on:{state} </p>
-          <p> Visiting: {pathname}</p>
-        </>
-      )}
+      <p> Registered on:{state} </p>
+      <p> Visiting: {pathname}</p>
     </div>
   );
 };
