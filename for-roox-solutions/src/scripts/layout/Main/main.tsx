@@ -4,15 +4,17 @@ import { Routes, Route } from 'react-router-dom';
 import Users from '../../pages/users/users';
 import Profile from '../../pages/profile/profile';
 import Loader from '../../components/Loader/Loader';
+import { IUser } from '../../shared/interface';
 
 type TProps = {
   isLoading: boolean;
+  state: IUser[];
 };
 
-const Main = ({ isLoading }: TProps) => {
+const Main = ({ isLoading, state }: TProps) => {
   return (
     <main className="main">
-      <nav>
+      <nav className="nav">
         <h2>Сортировка</h2>
         <ul>
           <li>
@@ -25,9 +27,22 @@ const Main = ({ isLoading }: TProps) => {
       </nav>
       <section className="content">
         <Routes>
-          <Route path="/profile/:username" element={isLoading ? <Loader /> :<Profile/>} />
-          <Route path="/" element={isLoading ? <Loader /> :<Users/>} />
-          {/* <Route path="">{isLoading ? <Loader /> : <Users isLoading />}</Route> */}
+          <Route
+            path="/profile/:username"
+            element={isLoading ? <Loader /> : <Profile />}
+          />
+          <Route
+            path="/"
+            element={isLoading ? <Loader /> : <Users state={state} />}
+          />
+          <Route
+            path="*"
+            element={
+              <div style={{ padding: '1rem' }}>
+                <p>There's nothing here!</p>
+              </div>
+            }
+          />
         </Routes>
       </section>
     </main>

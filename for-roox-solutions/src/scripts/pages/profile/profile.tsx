@@ -2,8 +2,6 @@ import React from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import './profile.scss';
 
-import Loader from '../../components/Loader/Loader';
-
 type TProps = {
   isLoading: boolean;
 };

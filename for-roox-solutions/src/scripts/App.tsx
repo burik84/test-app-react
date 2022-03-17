@@ -31,7 +31,7 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <Main isLoading={isLoading} />
+      <Main isLoading={isLoading} state={state} />
     </div>
   );
 }

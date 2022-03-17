@@ -23,3 +23,10 @@ export interface IUser {
   website: string;
   company: IUserCompany;
 }
+
+export interface IUserCard {
+  id: number;
+  name: string;
+  companyName: string;
+  cityName: string;
+};
