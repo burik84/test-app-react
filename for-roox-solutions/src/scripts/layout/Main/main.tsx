@@ -9,19 +9,47 @@ import { IUser } from '../../shared/interface';
 type TProps = {
   isLoading: boolean;
   state: IUser[];
+  setIsSorting: (type: boolean) => void;
+  setIsTyping: (type: string) => void;
+  isType?: string;
 };
 
-const Main = ({ isLoading, state }: TProps) => {
+const Main = ({
+  isLoading,
+  state,
+  setIsSorting,
+  setIsTyping,
+  isType,
+}: TProps) => {
+  const handleCLickButton = (e: any) => {
+    setIsSorting(true);
+    const target = e.target;
+    if (target.dataset.sort) setIsTyping(target.dataset.sort);
+  };
+  const btnSityClass = `btn ${isType === 'sity' ? 'active' : ' '}`;
+  const btnCompanyClass = `btn ${isType === 'company' ? 'active' : ' '}`;
   return (
     <main className="main">
       <nav className="nav">
         <h2>Сортировка</h2>
-        <ul>
+        <ul onClick={(e) => handleCLickButton(e)}>
           <li>
-            <button>По городу</button>
+            <button
+              data-sort="sity"
+              className={btnSityClass}
+              disabled={isType === 'sity'}
+            >
+              По городу
+            </button>
           </li>
           <li>
-            <button>По компании</button>
+            <button
+              data-sort="company"
+              className={btnCompanyClass}
+              disabled={isType === 'company'}
+            >
+              По компании
+            </button>
           </li>
         </ul>
       </nav>
