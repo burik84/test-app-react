@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import logo from '../assets/logo.svg';
 import '../styles/App.scss';
 
 import { IUser } from './shared/interface';
