@@ -17,6 +17,13 @@ button {
   cursor: pointer;
 }
 
-input, textarea {
+input,
+textarea {
   border: none;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
 }

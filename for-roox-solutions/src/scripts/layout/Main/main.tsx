@@ -39,7 +39,7 @@ const Main = ({
               className={btnSityClass}
               disabled={isType === 'sity'}
             >
-              По городу
+              по городу
             </button>
           </li>
           <li>
@@ -48,7 +48,7 @@ const Main = ({
               className={btnCompanyClass}
               disabled={isType === 'company'}
             >
-              По компании
+              по компании
             </button>
           </li>
         </ul>
