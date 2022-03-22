@@ -1,10 +1,10 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-ul{
+ul {
   list-style: none;
 }
 
@@ -15,4 +15,8 @@ button {
   /* отображаем курсор в виде руки при наведении; некоторые
   считают, что необходимо оставлять стрелочный вид для кнопок */
   cursor: pointer;
+}
+
+input, textarea {
+  border: none;
 }

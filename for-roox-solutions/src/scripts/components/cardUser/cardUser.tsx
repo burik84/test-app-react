@@ -24,7 +24,6 @@ const CardUser = ({ user }: TProps) => {
       </div>
       <div className="card-button">
         <Link to={`/profile/${user.id}`} state={user}>Подробнее</Link>
-
       </div>
     </li>
   );

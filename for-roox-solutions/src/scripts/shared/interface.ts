@@ -29,4 +29,8 @@ export interface IUserCard {
   name: string;
   companyName: string;
   cityName: string;
-};
+}
+
+export interface IUserProfile extends IUser {
+  comment?: string;
+}

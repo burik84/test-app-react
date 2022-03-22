@@ -1,0 +1,21 @@
+@import '../../../styles/constants';
+
+.btn-active {
+  background-color: darken($color-bcg-button, 25);
+}
+.form {
+  .form__submit {
+    background-color: $color-bcg-submit-enabled;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &.form-readOnly {
+    .form__submit {
+      background-color: $color-bcg-submit-disabled;
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+}
