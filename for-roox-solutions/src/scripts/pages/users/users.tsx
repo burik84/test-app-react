@@ -10,7 +10,7 @@ type TProps = {
 const Users = ({ state }: TProps) => {
   return (
     <div className="users">
-      <h3>Список пользователей</h3>
+      <h2>Список пользователей</h2>
       <ul className="lists">
         {state.map((item: IUser) => (
           <CardUser user={item} key={item.id} />

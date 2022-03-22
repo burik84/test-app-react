@@ -1,0 +1,45 @@
+@import '../../../styles/constants';
+
+.users {
+  margin-left: 34px;
+  text-align: left;
+  h2 {
+    margin-top: 19px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+.content {
+  width: 100%;
+}
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background-color: $color-bcg-card;
+  border-radius: 8px;
+  margin-bottom: 22px;
+}
+.card-button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: $color-bcg-button;
+}
+.card-user {
+  padding: 10px;
+}
+.card-user__name {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  margin-bottom: 7px;
+  span {
+    color: $color-text-secondary;
+    margin-right: 7px;
+  }
+}

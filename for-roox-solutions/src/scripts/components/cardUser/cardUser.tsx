@@ -11,14 +11,14 @@ const CardUser = ({ user }: TProps) => {
     <li className="card" key={user.id}>
       <div className="card-user">
         <p className="card-user__name">
-          <span>ФИО</span> {user.name}
+          <span>ФИО:</span>{user.name}
         </p>
         <p className="card-user__name">
-          <span>Город</span>
+          <span>город:</span>
           {user.address.city}
         </p>
         <p className="card-user__name">
-          <span>Компания</span>
+          <span>компания:</span>
           {user.company.name}
         </p>
       </div>
