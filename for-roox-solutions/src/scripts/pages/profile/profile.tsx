@@ -64,27 +64,27 @@ const Profile = ({users, setState }: TProps) => {
         break;
       case 'userEmail':
         emailValid = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(value);
-        profile.email = emailValid ? value : profile.email;
+        profile.email = value;
         break;
       case 'street':
         streetValid = /\w{2,}/.test(value);
-        profile.address.street = streetValid ? value : profile.address.street;
+        profile.address.street = value;
         break;
       case 'city':
         cityValid = /\w{2,}/.test(value);
-        profile.address.city = cityValid ? value : profile.address.city;
+        profile.address.city = value;
         break;
       case 'zipCode':
-        zipValid = /\w{7,}/.test(value);
-        profile.address.zipcode = zipValid ? value : profile.address.zipcode;
+        zipValid = /\d{4,}/.test(value);
+        profile.address.zipcode = value;
         break;
       case 'phone':
         phoneValid = /\w{7,}/.test(value);
-        profile.phone = phoneValid ? value : profile.phone;
+        profile.phone = value;
         break;
       case 'webSite':
         webValid = /\w{2,}/.test(value);
-        profile.website = webValid ? value : profile.website;
+        profile.website = value;
         break;
       case 'comment':
         profile.comment = value;
