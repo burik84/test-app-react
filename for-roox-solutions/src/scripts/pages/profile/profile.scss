@@ -23,12 +23,6 @@
   background-color: darken($color-bcg-button, 25);
 }
 .form {
-  .form__submit {
-    background-color: $color-bcg-submit-enabled;
-    &:hover {
-      cursor: pointer;
-    }
-  }
   &.form-readOnly {
     .form__submit {
       background-color: $color-bcg-submit-disabled;
@@ -40,6 +34,14 @@
       color: rgba(0, 0, 0, 0.3);
       &:hover {
         cursor: default;
+      }
+    }
+  }
+  &.validate {
+    .form__submit {
+      background-color: $color-bcg-submit-enabled;
+      &:hover {
+        cursor: pointer;
       }
     }
   }
@@ -68,6 +70,9 @@
     width: 212px;
     padding: 5px 10px;
     @extend %input-border;
+    &.non-valid {
+      border: 1px solid $color-form-border-er;
+    }
   }
   textarea {
     padding: 5px 10px;
