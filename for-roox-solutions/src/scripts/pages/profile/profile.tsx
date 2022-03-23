@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IUser } from '../../shared/interface';
 
 import './profile.scss';
 
+const FORMVALIDATENUMBER = 8;
+
 type TProps = {
-  changeDataUser: (data: IUser) => void;
+  users: IUser[];
+  setState: (data: IUser[]) => void;
 };
-const Profile = ({ changeDataUser }: TProps) => {
+const Profile = ({users, setState }: TProps) => {
   let { state }: IUser | any = useLocation();
   const navigate = useNavigate();
 
   const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
-  const [isChange, setIsChange] = useState<boolean>(false);
+  const [isValidateForm, setIsValidateForm] = useState<boolean>(false);
   const [userProfile, setUserProfile] = useState<IUser>(state);
+  const [isValidate, setIsValidate] = useState<number[]>([
+    1, 1, 1, 1, 1, 1, 1, 1,
+  ]);
+
+  const handleSubmitProfileUser = () => {
+    const idx = users.findIndex((item) => item.id === state.id);
+    const newState = users.slice();
+    newState.splice(idx, 1, userProfile);
+    setState(newState);
+  };
 
   const handleSubmit = (e: any) => {
-    console.log('submit form', userProfile);
-    changeDataUser(userProfile);
     e.preventDefault();
+    console.log(isValidateForm?userProfile:'Not change user');
+    if (isValidateForm) {
+      handleSubmitProfileUser()
+    }
     navigate('/');
   };
 
@@ -28,30 +42,49 @@ const Profile = ({ changeDataUser }: TProps) => {
     const name = target.name;
     const value = target.value;
     const profile = userProfile;
+
+    let nameValid = true,
+      userValid = true,
+      emailValid = true,
+      streetValid = true,
+      cityValid = true,
+      zipValid = true,
+      phoneValid = true,
+      webValid = true;
+    let isFormValidate = 0;
+
     switch (name) {
       case 'name':
+        nameValid = /\w{2,}/.test(value);
         profile.name = value;
         break;
       case 'userName':
+        userValid = /\w{2,}/.test(value);
         profile.username = value;
         break;
       case 'userEmail':
-        profile.email = value;
+        emailValid = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(value);
+        profile.email = emailValid ? value : profile.email;
         break;
       case 'street':
-        state.address.street = value;
+        streetValid = /\w{2,}/.test(value);
+        profile.address.street = streetValid ? value : profile.address.street;
         break;
       case 'city':
-        profile.address.city = value;
+        cityValid = /\w{2,}/.test(value);
+        profile.address.city = cityValid ? value : profile.address.city;
         break;
       case 'zipCode':
-        profile.address.zipcode = value;
+        zipValid = /\w{7,}/.test(value);
+        profile.address.zipcode = zipValid ? value : profile.address.zipcode;
         break;
       case 'phone':
-        profile.phone = value;
+        phoneValid = /\w{7,}/.test(value);
+        profile.phone = phoneValid ? value : profile.phone;
         break;
       case 'webSite':
-        profile.website = value;
+        webValid = /\w{2,}/.test(value);
+        profile.website = webValid ? value : profile.website;
         break;
       case 'comment':
         profile.comment = value;
@@ -59,17 +92,34 @@ const Profile = ({ changeDataUser }: TProps) => {
       default:
         break;
     }
-    setUserProfile(profile);
-    setIsChange(true);
+
+    const newValidate = [
+      +nameValid,
+      +userValid,
+      +emailValid,
+      +streetValid,
+      +cityValid,
+      +zipValid,
+      +phoneValid,
+      +webValid,
+    ];
+    setIsValidate(newValidate);
+
+    for (let i = 0; i < newValidate.length; i += 1) {
+      if (newValidate[0] === 1) isFormValidate+=1
+    }
+
+    if (isFormValidate===FORMVALIDATENUMBER) {
+      setUserProfile(profile)
+      setIsValidateForm(true)
+    }else{
+      setIsValidateForm(false)
+    }
   };
   const handleChangeEditing = () => {
     const status = !isReadOnly;
     setIsReadOnly(status);
   };
-
-  useEffect(() => {
-    if (isChange) setIsChange(false);
-  }, [isReadOnly, isChange]);
 
   return (
     <div className="profile">
@@ -85,7 +135,7 @@ const Profile = ({ changeDataUser }: TProps) => {
       <form
         action=""
         onSubmit={handleSubmit}
-        className={`form ${isReadOnly ? 'form-readOnly' : ''}`}
+        className={`form ${isReadOnly ? 'form-readOnly' : ''} ${isValidateForm ? 'validate' : ''}`}
       >
         <div className="profile-form">
           <div className="profile__input profile__input-name">
@@ -97,6 +147,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.name}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[0] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-user-name">
@@ -108,6 +159,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.username}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[1] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-email">
@@ -119,6 +171,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.email}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[2] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-street">
@@ -130,6 +183,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.address.street}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[3] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-city">
@@ -141,6 +195,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.address.city}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[4] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-zip-code">
@@ -152,6 +207,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.address.zipcode}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[5] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-phone">
@@ -163,6 +219,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.phone}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[6] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-web-site">
@@ -174,6 +231,7 @@ const Profile = ({ changeDataUser }: TProps) => {
               value={userProfile.website}
               onChange={handleChange}
               readOnly={isReadOnly}
+              className={!isValidate[7] ? 'non-valid' : ''}
             />
           </div>
           <div className="profile__input profile__input-comment">
@@ -191,7 +249,7 @@ const Profile = ({ changeDataUser }: TProps) => {
         <div className="profile__submit ">
           <input
             type="submit"
-            value={`${isReadOnly ? 'Назад' : 'Отправить'}`}
+            // value={`${isReadOnly ? 'Назад' : 'Отправить'}`}
             className="btn form__submit"
           />
         </div>
