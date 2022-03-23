@@ -7,21 +7,34 @@
 ul {
   list-style: none;
 }
-
+input,
+label,
+select,
+button,
+textarea {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
+  background: none;
+  line-height: 1;
+  outline-style: none;
+}
 button {
-  border: none;
   color: inherit;
-  background-color: transparent;
-  /* отображаем курсор в виде руки при наведении; некоторые
-  считают, что необходимо оставлять стрелочный вид для кнопок */
   cursor: pointer;
 }
-
+input:focus {
+  outline: 0;
+}
 input,
 textarea {
-  border: none;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
-
 h2 {
   font-size: 12px;
   line-height: 14px;

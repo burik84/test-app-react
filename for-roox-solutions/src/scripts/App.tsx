@@ -60,7 +60,7 @@ function App() {
   };
   return (
     <div className="App">
-      <Main isLoading={isLoading} state={state} setIsSorting={setIsSorting} setIsTyping={setIsTyping} isType={isType} />
+      <Main isLoading={isLoading} state={state} setIsSorting={setIsSorting} setIsTyping={setIsTyping} isType={isType} changeState={setState} />
     </div>
   );
 }

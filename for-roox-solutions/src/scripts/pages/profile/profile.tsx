@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { IUser, IUserProfile } from '../../shared/interface';
+import { IUser } from '../../shared/interface';
 
 import './profile.scss';
 
-const Profile = () => {
+type TProps = {
+  changeDataUser: (data: IUser) => void;
+};
+const Profile = ({ changeDataUser }: TProps) => {
   let { state }: IUser | any = useLocation();
   const navigate = useNavigate();
 
   const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
   const [isChange, setIsChange] = useState<boolean>(false);
-  const [userProfile, setUserProfile] = useState<IUserProfile>(state);
+  const [userProfile, setUserProfile] = useState<IUser>(state);
 
   const handleSubmit = (e: any) => {
     console.log('submit form', userProfile);
+    changeDataUser(userProfile);
     e.preventDefault();
     navigate('/');
   };
@@ -185,13 +189,11 @@ const Profile = () => {
           </div>
         </div>
         <div className="profile__submit ">
-          {/* <Link to="/"> */}
           <input
             type="submit"
             value={`${isReadOnly ? 'Назад' : 'Отправить'}`}
             className="btn form__submit"
           />
-          {/* </Link> */}
         </div>
       </form>
     </div>

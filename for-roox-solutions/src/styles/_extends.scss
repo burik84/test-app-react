@@ -1,5 +1,4 @@
-
-%page-section{
+%page-section {
   margin-left: 34px;
   text-align: left;
   h2 {
@@ -8,4 +7,8 @@
     font-size: 14px;
     line-height: 16px;
   }
+}
+%input-border {
+  border: 1px solid $color-form-border;
+  border-radius: 5px;
 }

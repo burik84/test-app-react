@@ -11,6 +11,7 @@ type TProps = {
   state: IUser[];
   setIsSorting: (type: boolean) => void;
   setIsTyping: (type: string) => void;
+  changeState: (data: IUser[]) => void;
   isType?: string;
 };
 
@@ -19,12 +20,19 @@ const Main = ({
   state,
   setIsSorting,
   setIsTyping,
+  changeState,
   isType,
 }: TProps) => {
   const handleCLickButton = (e: any) => {
     setIsSorting(true);
     const target = e.target;
     if (target.dataset.sort) setIsTyping(target.dataset.sort);
+  };
+  const handleSubmitProfileUser = (dataUser: IUser) => {
+    const idx = state.findIndex((item) => item.id === dataUser.id);
+    const newState = state.slice();
+    newState.splice(idx, 1, dataUser);
+    changeState(newState);
   };
   const btnSityClass = `btn ${isType === 'sity' ? 'active' : ' '}`;
   const btnCompanyClass = `btn ${isType === 'company' ? 'active' : ' '}`;
@@ -57,7 +65,13 @@ const Main = ({
         <Routes>
           <Route
             path="/profile/:username"
-            element={isLoading ? <Loader /> : <Profile />}
+            element={
+              isLoading ? (
+                <Loader />
+              ) : (
+                <Profile changeDataUser={handleSubmitProfileUser} />
+              )
+            }
           />
           <Route
             path="/"

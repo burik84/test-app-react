@@ -36,6 +36,12 @@
         cursor: default;
       }
     }
+    input {
+      color: rgba(0, 0, 0, 0.3);
+      &:hover {
+        cursor: default;
+      }
+    }
   }
 }
 
@@ -50,12 +56,21 @@
 }
 
 .profile__input {
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
   label {
+    margin-bottom: 3px;
     font-size: 8px;
     line-height: 9px;
-    margin-bottom: 3px;
+  }
+  input {
+    width: 212px;
+    padding: 5px 10px;
+    @extend %input-border;
+  }
+  textarea {
+    padding: 5px 10px;
+    @extend %input-border;
   }
 }

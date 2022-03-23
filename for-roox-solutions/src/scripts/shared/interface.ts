@@ -22,6 +22,7 @@ export interface IUser {
   phone: string;
   website: string;
   company: IUserCompany;
+  comment?: string;
 }
 
 export interface IUserCard {
@@ -31,6 +32,3 @@ export interface IUserCard {
   cityName: string;
 }
 
-export interface IUserProfile extends IUser {
-  comment?: string;
-}
