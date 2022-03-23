@@ -1,4 +1,23 @@
 @import '../../../styles/constants';
+@import '../../../styles/extends';
+
+.profile {
+  @extend %page-section;
+}
+
+.profile-header {
+  margin-top: 13px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    margin-top: 0;
+  }
+}
 
 .btn-active {
   background-color: darken($color-bcg-button, 25);
@@ -17,5 +36,26 @@
         cursor: default;
       }
     }
+  }
+}
+
+.profile-form {
+  margin-bottom: 10px;
+  padding: 20px 6px 20px 12px;
+  border: 1px solid $color-bcg-card;
+  border-radius: 8px;
+}
+.profile__submit {
+  text-align: right;
+}
+
+.profile__input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  label {
+    font-size: 8px;
+    line-height: 9px;
+    margin-bottom: 3px;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState  } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { IUser, IUserProfile } from '../../shared/interface';
@@ -68,9 +68,9 @@ const Profile = () => {
   }, [isReadOnly, isChange]);
 
   return (
-    <div>
+    <div className="profile">
       <div className="profile-header">
-        <h1>Профиль пользователя</h1>
+        <h2>Профиль пользователя</h2>
         <button
           className={`btn ${!isReadOnly ? 'btn-active' : ''}`}
           onClick={handleChangeEditing}
@@ -78,13 +78,13 @@ const Profile = () => {
           Редактировать
         </button>
       </div>
-      <div className="profile-form">
-        <form
-          action=""
-          onSubmit={handleSubmit}
-          className={`form ${isReadOnly ? 'form-readOnly' : ''}`}
-        >
-          <div className="profile__name">
+      <form
+        action=""
+        onSubmit={handleSubmit}
+        className={`form ${isReadOnly ? 'form-readOnly' : ''}`}
+      >
+        <div className="profile-form">
+          <div className="profile__input profile__input-name">
             <label htmlFor="name">Name</label>
             <input
               type="text"
@@ -95,7 +95,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__user-name">
+          <div className="profile__input profile__input-user-name">
             <label htmlFor="userName">User name</label>
             <input
               type="text"
@@ -106,7 +106,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__email">
+          <div className="profile__input profile__input-email">
             <label htmlFor="userEmail">E-mail</label>
             <input
               type="email"
@@ -117,7 +117,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__street">
+          <div className="profile__input profile__input-street">
             <label htmlFor="street">Street</label>
             <input
               type="text"
@@ -128,7 +128,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__city">
+          <div className="profile__input profile__input-city">
             <label htmlFor="city">City</label>
             <input
               type="text"
@@ -139,7 +139,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__zip-code">
+          <div className="profile__input profile__input-zip-code">
             <label htmlFor="zipCode">Zip code</label>
             <input
               type="text"
@@ -150,7 +150,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__phone">
+          <div className="profile__input profile__input-phone">
             <label htmlFor="phone">Phone</label>
             <input
               type="text"
@@ -161,7 +161,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__web-site">
+          <div className="profile__input profile__input-web-site">
             <label htmlFor="webSite">Web site</label>
             <input
               type="text"
@@ -172,7 +172,7 @@ const Profile = () => {
               readOnly={isReadOnly}
             />
           </div>
-          <div className="profile__comment">
+          <div className="profile__input profile__input-comment">
             <label htmlFor="comment">Comment</label>
             <textarea
               name="comment"
@@ -183,17 +183,17 @@ const Profile = () => {
               readOnly={isReadOnly}
             ></textarea>
           </div>
-          <div className="profile__submit ">
-            {/* <Link to="/"> */}
-              <input
-                type="submit"
-                value={`${isReadOnly?'Назад':'Отправить'}`}
-                className="btn form__submit"
-              />
-            {/* </Link> */}
-          </div>
-        </form>
-      </div>
+        </div>
+        <div className="profile__submit ">
+          {/* <Link to="/"> */}
+          <input
+            type="submit"
+            value={`${isReadOnly ? 'Назад' : 'Отправить'}`}
+            className="btn form__submit"
+          />
+          {/* </Link> */}
+        </div>
+      </form>
     </div>
   );
 };
