@@ -7,16 +7,13 @@ Create app on React may be with Matherial UI/bootstrap
 To get a local copy of the current code, clone it using git:
 
 ```command
-git clone git@github.com:burik84/test-app-react.git
+git clone git@github.com:burik84/test-app-react.git --branch for-roox-solutions
 
-cd test-app-react
-
-git checkout for-roox-solutions
+cd test-app-react/for-roox-solutions/
 ```
 
 Next, Node.js. The current version Node ver.16.13.2 LTS. If you have an older version, please install Node.js via the [official package](https://nodejs.org).
-You need to install the webpack package
-globally (see also [webpack](https://webpack.js.org/guides/getting-started/)):
+You need to install the webpack package globally (see also [webpack](https://webpack.js.org/guides/getting-started/)):
 
 ```command
 npm install -g webpack-cli
